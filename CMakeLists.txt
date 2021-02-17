@@ -2,7 +2,7 @@
 # Defines fc library target.
 
 PROJECT( fc )
-CMAKE_MINIMUM_REQUIRED( VERSION 2.8.12 )
+CMAKE_MINIMUM_REQUIRED( VERSION 3.13.4 )
 
 MESSAGE(STATUS "Configuring project fc located in: ${CMAKE_CURRENT_SOURCE_DIR}")
 SET( CMAKE_AUTOMOC OFF )
@@ -113,11 +113,11 @@ IF( WIN32 )
   set(Boost_USE_MULTITHREADED ON)
   set(BOOST_ALL_DYN_LINK OFF) # force dynamic linking for all libraries
 
-  FIND_PACKAGE(Boost 1.53 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+  FIND_PACKAGE(Boost 1.67 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
   # For Boost 1.53 on windows, coroutine was not in BOOST_LIBRARYDIR and do not need it to build,  but if boost versin >= 1.54, find coroutine otherwise will cause link errors
-  IF(NOT "${Boost_VERSION}" MATCHES "1.53(.*)")
+  IF(NOT "${Boost_VERSION}" MATCHES "1.67(.*)")
     SET(BOOST_LIBRARIES_TEMP ${Boost_LIBRARIES})
-    FIND_PACKAGE(Boost 1.54 REQUIRED COMPONENTS coroutine)
+    FIND_PACKAGE(Boost 1.67 REQUIRED COMPONENTS coroutine)
     LIST(APPEND BOOST_COMPONENTS coroutine)
     SET(Boost_LIBRARIES ${BOOST_LIBRARIES_TEMP} ${Boost_LIBRARIES})
   ENDIF()
@@ -130,7 +130,7 @@ ELSE(WIN32)
 
   LIST(APPEND BOOST_COMPONENTS coroutine)
 
-  FIND_PACKAGE(Boost 1.53 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+  FIND_PACKAGE(Boost 1.67 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
 
   SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.so")
 
